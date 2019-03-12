@@ -51,7 +51,22 @@
 			alert("connected");	
 			var accessToken = response.authResponse.accessToken;
 		}else if(response.status === 'not_authorized'){
-			alert("not");
+			alert("not_authorized");
+			FB.api('/me?fields=name,first_name,last_name,email', function(
+					response) {
+				$.ajax({
+					url : "userInfo",
+					type : "POST",
+					data : {
+						userInfo : JSON.stringify(response)
+					},
+					dataType : "html",
+					async : false,
+					success : function(data) {
+						alert("login success" + data);
+					}
+				});
+			});
 		}else{
 			alert("not login");	
 			FB.login(function(response) {
@@ -101,9 +116,9 @@
   
   <i class="fab fa-facebook-square loginIcon" onclick="checkLoginState();"></i>
   <div id="testDiv1">ssss</div>
-  <fb:login-button scope="public_profile,email"
-		onlogin="checkLoginState();" auto_logout_link="true" size="large"
-		show_faces="true">
-	</fb:login-button>
+<!--   <fb:login-button scope="public_profile,email" -->
+<!-- 		onlogin="checkLoginState();" auto_logout_link="true" size="large" -->
+<!-- 		show_faces="true"> -->
+<!-- 	</fb:login-button> -->
 </body>
 </html>
